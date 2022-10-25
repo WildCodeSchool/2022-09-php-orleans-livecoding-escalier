@@ -2,7 +2,18 @@
 
 :root {
     --bs-primary: #472A1C;
+    --bs-light: #FFF9F5;
+    --bs-dark: #110A07;
 
     --font-text: 'Roboto', sans-serif;
     --font-title: 'Imbue', serif;
+}
+
+.navbar {
+    background-color: var(--bs-light);
+}
+
+.navbar .nav-link {
+    color: var(--bs-primary);
+    font-family: var(--font-text);
 }
