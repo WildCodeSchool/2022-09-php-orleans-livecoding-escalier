@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheet %}
+	<link rel="stylesheet" href="assets/css/menu.css">
+{% endblock %}
+{% block content %}
+	<h1 class="mt-5">Notre menu</h1>
+	<main class="container-fluid">
+		<ul class="w-50">
+			{% for dish in dishes %}
+				<li class="m-3 d-flex justify-content-between"><div>{{ dish.title }}</div><div>{{ dish.price }}€</div></li>
+			{% endfor %}
+		</ul>
+	</main>
+
+{% endblock %}
