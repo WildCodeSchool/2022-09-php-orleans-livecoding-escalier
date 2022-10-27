@@ -1,0 +1,19 @@
+.header {
+    --header-size: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    height: var(--header-size);
+    background-image: url('../images/header.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header h1 {
+    --main-title-size: 150px;
+    font-size: clamp(100px, 10vw, var(--main-title-size));
+}
+
+.header h1, .header h2 {
+    color: var(--bs-light);
+}

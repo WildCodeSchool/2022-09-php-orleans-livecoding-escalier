@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Imbue:opsz,wght@10..100,100;10..100,400;10..100,700&family=Roboto:wght@100;400;500;700&display=swap');
+
+:root {
+    --bs-primary: #472A1C;
+    --bs-light: #FFF9F5;
+    --bs-dark: #110A07;
+
+    --font-text: 'Roboto', sans-serif;
+    --font-title: 'Imbue', serif;
+}
+
+.navbar {
+    background-color: var(--bs-light);
+}
+
+.navbar .nav-link {
+    color: var(--bs-primary);
+    font-family: var(--font-text);
+}

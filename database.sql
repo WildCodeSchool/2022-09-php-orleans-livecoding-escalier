@@ -61,3 +61,15 @@ ALTER TABLE `item`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `dish` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255),
+  `price` DECIMAL(5, 2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `dish` (`title`, `description`, `price`) VALUES
+('Terrine de lentilles du Berry/saumon fumé', 'Des lentilles et du saumon tout frais', 15),
+('Kir Berrichon', '', 4),
+('Filet de canette entier 200g de Vendée', 'Un bon canard bien cuisiné', 20);
