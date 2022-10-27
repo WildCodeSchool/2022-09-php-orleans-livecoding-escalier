@@ -22,4 +22,4 @@ jobs:
         run: npm install -g caprover
 
       - name: Caprover Deploy
-        run: caprover deploy -h '${{ env.CAPROVER_SERVER }}' -p '${{ env.CAPROVER_PASSWORD }}' -b 'main' -a '${{ secrets.CAPROVER_APP_NAME }}'
+        run: caprover deploy -h '${{ secrets.CAPROVER_SERVER }}' -p '${{ secrets.CAPROVER_PASSWORD }}' -b 'main' -a '${{ secrets.CAPROVER_APP_NAME }}'
