@@ -10,6 +10,7 @@ return [
     '' => ['HomeController', 'index',],
     'menu' => ['MenuController', 'index',],
     'admin' => ['AdminController', 'index'],
+    'login' => ['LoginController', 'login'],
     'items' => ['ItemController', 'index',],
     'items/edit' => ['ItemController', 'edit', ['id']],
     'items/show' => ['ItemController', 'show', ['id']],

@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheet %}
+    <link rel="stylesheet" href="assets/css/home.css">
+    {% endblock %}
+    {% block content %}
+        <main class="container">
+			<h1 class="mt-5">Se connecter</h1>
+            <form method="POST" novalidate>
+
+			{% if errors %}
+				<ul class="alert alert-danger">
+					{% for error in errors %}
+						<li>{{ error}}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			<div class="mb-3">
+                <label class="form-label" for="email">Email</label>
+                <input class="form-control"  type="email" id="email" name="email" value="{{ credentials.email ?? ''}}">
+			</div>
+			<div class="mb-3">
+				<label  class="form-label" for="password">Mot de passe</label>
+				<input class="form-control" type="password" id="password" name="password"  value="{{ credentials.password ?? ''}}">
+			</div>
+				<button class="btn btn-success">Se connecter</button>
+			</form>
+         </main>
+ {% endblock %}
