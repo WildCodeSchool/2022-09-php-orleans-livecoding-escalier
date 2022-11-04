@@ -9,6 +9,12 @@
 				<a class="nav-link fs-5" href="/menu">Menu</a>
 				<a class="nav-link fs-5" href="#">Réserver</a>
 				<a class="nav-link fs-5" href="#">Contact</a>
+				{% if user %} 
+					<span class="text-secondary nav-link fs-5">Bienvenue {{ user.email }}</span>
+					<a class="nav-link fs-5 text-danger" href="/logout">Se déconnecter</a>
+				{% else %}
+					<a class="nav-link fs-5" href="/login">Se connecter</a>
+				{% endif %}
 			</div>
 		</div>
 	</div>

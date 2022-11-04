@@ -73,3 +73,12 @@ INSERT INTO `dish` (`title`, `description`, `price`) VALUES
 ('Terrine de lentilles du Berry/saumon fumé', 'Des lentilles et du saumon tout frais', 15),
 ('Kir Berrichon', '', 4),
 ('Filet de canette entier 200g de Vendée', 'Un bon canard bien cuisiné', 20);
+     
+CREATE TABLE `user` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `email` varchar(255) NOT NULL UNIQUE,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `user` (`email`, `password`) VALUES
+('admin@escalier.com', '$2y$10$/qAfHB4nVVgJ25DIqMj7iOQU0Uu4I14wHHhdMJXfkzhO.8CcCRnk6');
