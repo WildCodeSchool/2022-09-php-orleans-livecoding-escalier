@@ -62,17 +62,32 @@ ALTER TABLE `item`
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-CREATE TABLE `dish` (
-  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE `category` (
+  `id` int(11) UNSIGNED AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `description` varchar(255),
-  `price` DECIMAL(5, 2) NOT NULL
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `dish` (`title`, `description`, `price`) VALUES
-('Terrine de lentilles du Berry/saumon fumé', 'Des lentilles et du saumon tout frais', 15),
-('Kir Berrichon', '', 4),
-('Filet de canette entier 200g de Vendée', 'Un bon canard bien cuisiné', 20);
+INSERT INTO `category` (`title`) VALUES ('Entrée');
+INSERT INTO `category` (`title`) VALUES ('Plat');
+INSERT INTO `category` (`title`) VALUES ('Dessert');
+INSERT INTO `category` (`title`) VALUES ('Boissons');
+
+CREATE TABLE `dish` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` varchar(255),
+  `price` DECIMAL(5, 2) NOT NULL,
+  `category_id` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_category`
+  FOREIGN KEY (`category_id`) REFERENCES category (id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `dish` (`title`, `description`, `price`, `category_id`) VALUES
+('Terrine de lentilles du Berry/saumon fumé', 'Des lentilles et du saumon tout frais', 15, 1),
+('Kir Berrichon', '', 5, 4),
+('Filet de canette entier 200g de Vendée', 'Un bon canard bien cuisiné', 20, 2);
      
 CREATE TABLE `user` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
