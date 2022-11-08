@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Model\CategoryManager;
 use App\Model\DishManager;
 
 class AdminDishController extends AbstractController
@@ -13,7 +14,7 @@ class AdminDishController extends AbstractController
         $this->isAuthenticated();
 
         $dishManager = new DishManager();
-        $dishes = $dishManager->selectAll('title');
+        $dishes = $dishManager->selectAllWithCategory();
 
         return $this->twig->render('Admin/Dish/index.html.twig', [
             'dishes' => $dishes,
@@ -24,9 +25,13 @@ class AdminDishController extends AbstractController
     {
         $errors = $dish = [];
 
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->selectAll('title');
+
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dish = array_map('trim', $_POST);
-            $errors = $this->validate($dish);
+            $errors = $this->validate($dish, $categories);
 
             if (empty($errors)) {
                 $dishManager = new DishManager();
@@ -40,6 +45,7 @@ class AdminDishController extends AbstractController
         return $this->twig->render('Admin/Dish/add.html.twig', [
             'errors' => $errors,
             'dish' => $dish,
+            'categories' => $categories,
         ]);
     }
 
@@ -49,10 +55,13 @@ class AdminDishController extends AbstractController
         $dishManager = new DishManager();
         $dish = $dishManager->selectOneById($id);
 
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->selectAll('title');
+
         if ($dish && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $dish = array_map('trim', $_POST);
             $dish['id'] = $id;
-            $errors = $this->validate($dish);
+            $errors = $this->validate($dish, $categories);
 
             if (empty($errors)) {
                 $dishManager = new DishManager();
@@ -66,6 +75,7 @@ class AdminDishController extends AbstractController
         return $this->twig->render('Admin/Dish/edit.html.twig', [
             'errors' => $errors,
             'dish' => $dish,
+            'categories' => $categories,
         ]);
     }
 
@@ -82,7 +92,7 @@ class AdminDishController extends AbstractController
     }
 
 
-    private function validate(array $dish): array
+    private function validate(array $dish, array $categories): array
     {
         $errors = [];
 
@@ -104,6 +114,12 @@ class AdminDishController extends AbstractController
 
         if (strlen($dish['description']) > self::INPUT_MAX_LENGTH) {
             $errors[] = 'La description doit faire moins de ' . self::INPUT_MAX_LENGTH . ' caractères';
+        }
+
+        $categoryIds = array_column($categories, 'id');
+
+        if (!in_array($dish['category'], $categoryIds)) {
+            $errors[] = 'Mauvaise catégorie';
         }
 
         return $errors;
