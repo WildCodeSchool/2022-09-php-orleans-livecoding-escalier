@@ -43,6 +43,32 @@ class AdminDishController extends AbstractController
         ]);
     }
 
+    public function edit(int $id): string
+    {
+        $errors = [];
+        $dishManager = new DishManager();
+        $dish = $dishManager->selectOneById($id);
+
+        if ($dish && $_SERVER['REQUEST_METHOD'] === 'POST') {
+            $dish = array_map('trim', $_POST);
+            $dish['id'] = $id;
+            $errors = $this->validate($dish);
+
+            if (empty($errors)) {
+                $dishManager = new DishManager();
+                $dishManager->update($dish);
+
+                header('Location: /admin/menu');
+                return '';
+            }
+        }
+
+
+        return $this->twig->render('Admin/Dish/edit.html.twig', [
+            'errors' => $errors,
+            'dish' => $dish,
+        ]);
+    }
 
     private function validate(array $dish): array
     {
