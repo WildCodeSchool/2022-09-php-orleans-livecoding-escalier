@@ -14,6 +14,7 @@ return [
     'admin/menu/add' => ['AdminDishController', 'add'],
     'admin/menu/delete' => ['AdminDishController', 'delete'],
     'admin/menu/edition' => ['AdminDishController', 'edit', ['id']],
+    'error' => ['ErrorController', 'error', ['code']],
     'login' => ['LoginController', 'login'],
     'logout' => ['LoginController', 'logout'],
     'items' => ['ItemController', 'index',],

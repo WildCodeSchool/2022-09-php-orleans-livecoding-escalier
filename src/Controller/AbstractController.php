@@ -40,7 +40,7 @@ abstract class AbstractController
     {
         if (!isset($_SESSION['user_id'])) {
             header('HTTP/1.1 401 Unauthorized');
-            throw new Exception('Unauthorized access');
+            header('Location: /error?code=401');
         }
     }
 }
