@@ -11,6 +11,7 @@ return [
     'menu' => ['MenuController', 'index',],
     'admin' => ['AdminController', 'index'],
     'admin/menu' => ['AdminDishController', 'index'],
+    'admin/menu/add' => ['AdminDishController', 'add'],
     'login' => ['LoginController', 'login'],
     'logout' => ['LoginController', 'logout'],
     'items' => ['ItemController', 'index',],

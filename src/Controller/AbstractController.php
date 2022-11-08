@@ -6,6 +6,7 @@ use Twig\Environment;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use App\Model\UserManager;
+use Exception;
 
 /**
  * Initialized some Controller common features (Twig...)
@@ -33,5 +34,13 @@ abstract class AbstractController
             $user = $userManager->selectOneById($_SESSION['user_id']);
         }
         $this->twig->addGlobal('user', $user);
+    }
+
+    protected function isAuthenticated()
+    {
+        if (!isset($_SESSION['user_id'])) {
+            header('HTTP/1.1 401 Unauthorized');
+            throw new Exception('Unauthorized access');
+        }
     }
 }
