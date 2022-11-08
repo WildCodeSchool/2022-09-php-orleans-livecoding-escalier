@@ -63,12 +63,24 @@ class AdminDishController extends AbstractController
             }
         }
 
-
         return $this->twig->render('Admin/Dish/edit.html.twig', [
             'errors' => $errors,
             'dish' => $dish,
         ]);
     }
+
+    public function delete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = (int) trim($_POST['id']);
+
+            $dishManager = new DishManager();
+            $dishManager->delete($id);
+
+            header('Location: /admin/menu');
+        }
+    }
+
 
     private function validate(array $dish): array
     {

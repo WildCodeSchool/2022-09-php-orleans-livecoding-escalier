@@ -12,6 +12,7 @@ return [
     'admin' => ['AdminController', 'index'],
     'admin/menu' => ['AdminDishController', 'index'],
     'admin/menu/add' => ['AdminDishController', 'add'],
+    'admin/menu/delete' => ['AdminDishController', 'delete'],
     'admin/menu/edition' => ['AdminDishController', 'edit', ['id']],
     'login' => ['LoginController', 'login'],
     'logout' => ['LoginController', 'logout'],
