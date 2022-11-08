@@ -82,3 +82,13 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`email`, `password`) VALUES
 ('admin@escalier.com', '$2y$10$/qAfHB4nVVgJ25DIqMj7iOQU0Uu4I14wHHhdMJXfkzhO.8CcCRnk6');
+
+CREATE TABLE `category` (
+  `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `title` varchar(255) NOT NULL,
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `category` (`title`) VALUES ('Entrée');
+INSERT INTO `category` (`title`) VALUES ('Plat');
+INSERT INTO `category` (`title`) VALUES ('Dessert');
+INSERT INTO `category` (`title`) VALUES ('Boissons');
