@@ -85,7 +85,7 @@ INSERT INTO `user` (`email`, `password`) VALUES
 
 CREATE TABLE `category` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `title` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `category` (`title`) VALUES ('Entrée');
