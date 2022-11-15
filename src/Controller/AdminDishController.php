@@ -76,11 +76,27 @@ class AdminDishController extends AbstractController
 
         if ($dish && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $dish = array_map('trim', $_POST);
+            $image = $_FILES['image'];
+
             $dish['id'] = $id;
-            $errors = $this->validate($dish, $categories);
+
+            $dishErrors = $this->validate($dish, $categories);
+            $uploadErrors = $this->validateUpload($image);
+
+            $errors = array_merge($dishErrors, $uploadErrors);
 
             if (empty($errors)) {
                 $dishManager = new DishManager();
+
+                $dish['image'] = null;
+
+                if (!empty($image['name'])) {
+                    $uniqName = uniqid() . $image['name'];
+                    move_uploaded_file($image['tmp_name'], self::UPLOAD_DIR . $uniqName);
+
+                    $dish['image'] = $uniqName;
+                }
+
                 $dishManager->update($dish);
 
                 header('Location: /admin/menu');
@@ -110,23 +126,24 @@ class AdminDishController extends AbstractController
     private function validateUpload(array $file)
     {
         $errors = [];
+        if (!empty($file['name'])) {
+            if ($file['error'] != 0) {
+                $errors[] = 'Upload problem';
+                return $errors;
+            }
 
-        if ($file['error'] != 0) {
-            $errors[] = 'Upload problem';
-            return $errors;
-        }
+            $maxFileSize = 1000000;
+            if ($file['size'] > $maxFileSize) {
+                $errors[] = 'Le fichier doit faire moins de ' . $maxFileSize / 1000000 . 'Mo';
+            }
 
-        $maxFileSize = 1000000;
-        if ($file['size'] > $maxFileSize) {
-            $errors[] = 'Le fichier doit faire moins de ' . $maxFileSize / 1000000 . 'Mo';
-        }
+            $authorizedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+            $mime = mime_content_type($file['tmp_name']);
 
-        $authorizedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-        $mime = mime_content_type($file['tmp_name']);
-
-        if (!in_array($mime, $authorizedMimes)) {
-            $mimeError = str_replace('image/', '', implode(', ', $authorizedMimes));
-            $errors[] = 'Le fichier doit être un des types suivants : ' . $mimeError;
+            if (!in_array($mime, $authorizedMimes)) {
+                $mimeError = str_replace('image/', '', implode(', ', $authorizedMimes));
+                $errors[] = 'Le fichier doit être un des types suivants : ' . $mimeError;
+            }
         }
 
         return $errors;

@@ -15,7 +15,11 @@
 	<input value="{{ dish.description ?? '' }}" class="form-control" type="text" id="description" name="description" placeholder="du fromage et des patates" required="required"/>
 	<label class="form-label mt-3" for="image">Image</label>
 	<input class="form-control" type="file" id="image" name="image"/>
-
+	{% if dish.image is not null %} 
+	<div>
+		<img  class="w-25" src="/uploads/{{ dish.image }}" alt="img dish">
+	</div>
+	{% endif %}
 	<label class="form-label mt-3" for="category">Choisir une catégorie</label>
 	<select class="form-control" name="category" id="category">
 		{% for category in categories %}
