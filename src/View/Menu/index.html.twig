@@ -6,9 +6,16 @@
 	<h1 class="mt-5">Notre menu</h1>
 	<main class="container-fluid">
 		<ul class="w-50">
-			{% for dish in dishes %}
-				<li class="m-3 d-flex justify-content-between"><div>{{ dish.title }}</div><div>{{ dish.price }}€</div></li>
+			{% for categoryTitle in categoryTitles %}
+				{% for dish in dishes|filter(dish => dish.category_title==categoryTitle) %}
+					<h2>{{ categoryTitle }}</h2>
+					<li class="m-3 d-flex justify-content-between">
+						<div>{{ dish.title }}</div>
+						<div>{{ dish.price }}€</div>
+					</li>
+				{% endfor %}
 			{% endfor %}
+
 		</ul>
 	</main>
 
