@@ -20,13 +20,14 @@ class DishManager extends AbstractManager
     public function insert(array $dish): void
     {
         $query = "INSERT INTO " . self::TABLE .
-            " (`title`, `description`, `price`, `category_id`) 
-            VALUES (:title, :description, :price, :category)";
+            " (`title`, `description`, `price`, `category_id`, `image`) 
+            VALUES (:title, :description, :price, :category, :image)";
         $statement = $this->pdo->prepare($query);
         $statement->bindValue('title', $dish['title'], PDO::PARAM_STR);
         $statement->bindValue('description', $dish['description'], PDO::PARAM_STR);
         $statement->bindValue('price', $dish['price']);
         $statement->bindValue('category', $dish['category']);
+        $statement->bindValue('image', $dish['image']);
 
         $statement->execute();
     }

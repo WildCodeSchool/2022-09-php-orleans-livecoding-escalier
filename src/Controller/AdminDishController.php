@@ -8,6 +8,7 @@ use App\Model\DishManager;
 class AdminDishController extends AbstractController
 {
     public const INPUT_MAX_LENGTH = 255;
+    public const UPLOAD_DIR = __DIR__ . '/../../public/uploads/';
 
     public function index(): string
     {
@@ -23,17 +24,32 @@ class AdminDishController extends AbstractController
 
     public function add(): string
     {
+        $this->isAuthenticated();
+
         $errors = $dish = [];
 
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->selectAll('title');
 
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dish = array_map('trim', $_POST);
-            $errors = $this->validate($dish, $categories);
+            $image = $_FILES['image'];
+
+            $dishErrors = $this->validate($dish, $categories);
+            $uploadErrors = $this->validateUpload($image);
+
+            $errors = array_merge($dishErrors, $uploadErrors);
 
             if (empty($errors)) {
+                $dish['image'] = null;
+
+                if (!empty($image)) {
+                    $uniqName = uniqid() . $image['name'];
+                    move_uploaded_file($image['tmp_name'], self::UPLOAD_DIR . $uniqName);
+
+                    $dish['image'] = $uniqName;
+                }
+
                 $dishManager = new DishManager();
                 $dishManager->insert($dish);
 
@@ -91,6 +107,30 @@ class AdminDishController extends AbstractController
         }
     }
 
+    private function validateUpload(array $file)
+    {
+        $errors = [];
+
+        if ($file['error'] != 0) {
+            $errors[] = 'Upload problem';
+            return $errors;
+        }
+
+        $maxFileSize = 1000000;
+        if ($file['size'] > $maxFileSize) {
+            $errors[] = 'Le fichier doit faire moins de ' . $maxFileSize / 1000000 . 'Mo';
+        }
+
+        $authorizedMimes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+        $mime = mime_content_type($file['tmp_name']);
+
+        if (!in_array($mime, $authorizedMimes)) {
+            $mimeError = str_replace('image/', '', implode(', ', $authorizedMimes));
+            $errors[] = 'Le fichier doit être un des types suivants : ' . $mimeError;
+        }
+
+        return $errors;
+    }
 
     private function validate(array $dish, array $categories): array
     {
