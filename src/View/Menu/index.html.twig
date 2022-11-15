@@ -7,11 +7,12 @@
 	<main class="container-fluid">
 		<ul class="w-50">
 			{% for categoryTitle in categoryTitles %}
+				<h2>{{ categoryTitle }}</h2>
 				{% for dish in dishes|filter(dish => dish.category_title==categoryTitle) %}
-					<h2>{{ categoryTitle }}</h2>
 					<li class="m-3 d-flex justify-content-between">
 						<div>{{ dish.title }}</div>
 						<div>{{ dish.price }}€</div>
+						<img src="{{ dish.image is null ? '/assets/images/dish_placeholder.webp' : 'uploads/' ~ dish.image }}" alt="image de {{ dish.title }}">
 					</li>
 				{% endfor %}
 			{% endfor %}

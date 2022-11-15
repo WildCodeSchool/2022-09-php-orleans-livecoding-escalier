@@ -78,16 +78,18 @@ CREATE TABLE `dish` (
   `title` varchar(255) NOT NULL,
   `description` varchar(255),
   `price` DECIMAL(5, 2) NOT NULL,
+  `image` VARCHAR(255),
   `category_id` int(11) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_category`
   FOREIGN KEY (`category_id`) REFERENCES category (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `dish` (`title`, `description`, `price`, `category_id`) VALUES
-('Terrine de lentilles du Berry/saumon fumé', 'Des lentilles et du saumon tout frais', 15, 1),
-('Kir Berrichon', '', 5, 4),
-('Filet de canette entier 200g de Vendée', 'Un bon canard bien cuisiné', 20, 2);
+INSERT INTO `dish` (`title`, `description`, `price`, `category_id`, `image`) VALUES
+('Terrine de lentilles du Berry/saumon fumé', 'Des lentilles et du saumon tout frais', 15, 1, 'terrine_lentille.webp'),
+('Kir Berrichon', '', 5, 4, null),
+('Kir royal', '', 6, 4, null),
+('Filet de canette entier 200g de Vendée', 'Un bon canard bien cuisiné', 20, 2, 'filet_canette.webp');
      
 CREATE TABLE `user` (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
